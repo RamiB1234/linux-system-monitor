@@ -30,7 +30,7 @@ vector<Process>& System::Processes()
      for(auto pid : processes)
      {
          Process p(pid);
-         processes_.push_back(p);
+         processes_.emplace_back(p);
      }
 
      std::sort(processes_.begin(), processes_.end(), CompareProcess);

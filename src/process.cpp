@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "process.h"
+#include "system.h"
 #include "linux_parser.h"
 
 using std::string;
@@ -44,7 +45,7 @@ void Process::UpdateParams()
 
 string Process::Command() 
 { 
-    return LinuxParser::Command(pid); 
+    return LinuxParser::Command(pid).substr(0,20); 
 }
 
 string Process::Ram() 
@@ -62,8 +63,8 @@ string Process::User()
 
 long int Process::UpTime() 
 { 
-    long utime = LinuxParser::UpTime(pid);
-    return utime/sysconf(_SC_CLK_TCK);
+    UpdateParams();
+    return uptime - utime/sysconf(_SC_CLK_TCK);
 }
 
 bool Process::operator<(Process const& a) const 
